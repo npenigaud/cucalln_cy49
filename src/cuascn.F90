@@ -16,8 +16,10 @@ SUBROUTINE CUASCN &
  & PDMFEN,&
  & KCBOT,    KCTOP,    KCTOP0,   KDPL,     PMFUDE_RATE,    PKINEU,  PWU, PWMEAN )  
 
-!$ACDC manyblocks --array-slice-to-address
-
+!!!$ACDC singlecolumn --inlined cuadjtq.F90,cubasmcn.F90,cuentr.F90,cuadjtqs.F90
+!!!$ACDC manyblocks --max-statements-per-parallel=20 --inlined cuadjtq.F90,cubasmcn.F90,cuentr.F90,cuadjtqs.F90 
+!$ACDC singlecolumn
+!$ACDC manyblocks --max-statements-per-parallel=20
 !          THIS ROUTINE DOES THE CALCULATIONS FOR CLOUD ASCENTS
 !          FOR CUMULUS PARAMETERIZATION
 
@@ -295,7 +297,6 @@ ENDIF
 
 LLO3=.FALSE.
 
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JL=KIDIA,KFDIA
   ZLUOLD(JL)=0.0_JPRB
@@ -352,9 +353,6 @@ DO JL=KIDIA,KFDIA
   IF(.NOT.LDCUM(JL).OR.KTYPE(JL) == 3) LLKLAB(JL)=.TRUE.
 ENDDO
 
-!$ACDC }
-
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JK=1,KLEV
   DO JL=KIDIA,KFDIA
@@ -410,7 +408,6 @@ DO JL=KIDIA,KFDIA
   ENDIF
 ENDDO
 
-!$ACDC }
 
 !----------------------------------------------------------------------
 
@@ -420,7 +417,6 @@ ENDDO
 !                  THEN CHECK FOR BUOYANCY AND SET FLAGS ACCORDINGLY
 !                  -------------------------------------------------
 
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JK=KLEV-1,3,-1
 
@@ -863,14 +859,12 @@ DO JK=KLEV-1,3,-1
   ENDIF
 ENDDO
 
-!$ACDC }
 
 !----------------------------------------------------------------------
 
 !     5.           FINAL CALCULATIONS 
 !                  ------------------
 
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JL=KIDIA,KFDIA
   IF(KCTOP(JL) == -1) LDCUM(JL)=.FALSE.
@@ -881,7 +875,6 @@ DO JL=KIDIA,KFDIA
   ENDIF
 ENDDO
 
-!$ACDC }
 
 END ASSOCIATE
 IF (LHOOK) CALL DR_HOOK('CUASCN',1,ZHOOK_HANDLE)

@@ -4,6 +4,7 @@ SUBROUTINE CUBIDIAG &
  & PA,    PB,   PR,   PU )  
 
 !$ACDC singlecolumn
+!$ACDC manyblocks --max-statements-per-parallel=20
 
 !          P. Bechtold         E.C.M.W.F.     07/03
 

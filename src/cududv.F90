@@ -5,7 +5,8 @@ SUBROUTINE CUDUDV &
  & PMFUO,    PMFDO,    PUU,      PUD,      PVU,      PVD,  PGP2DSPP,&
  & PTENU,    PTENV  )  
 
-!$ACDC singlecolumn --array-slice-to-address
+!$ACDC singlecolumn 
+!$ACDC manyblocks --max-statemets-per-parallel=20
 
 !**** *CUDUDV* - UPDATES U AND V TENDENCIES,
 !                DOES GLOBAL DIAGNOSTIC OF DISSIPATION

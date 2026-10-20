@@ -8,7 +8,8 @@ SUBROUTINE CUBASEN &
  & KLAB,     LDCUM,    LDSC,     KCBOT,    KBOTSC,&
  & KCTOP,    KDPL,     PCAPE )  
 
-!$ACDC manyblocks --array-slice-to-address
+!$ACDC singlecolumn --inlined cuadjtq.F90,cubasmcn.F90,cuentr.F90,cuadjtqs.F90
+!$ACDC manyblocks  --max-statements-per-parallel=20 --inlined cuadjtq.F90,cubasmcn.F90,cuentr.F90,cuadjtqs.F90
 
 !          THIS ROUTINE CALCULATES CLOUD BASE FIELDS
 !          CLOUD BASE HEIGHT AND CLOUD TOP HEIGHT
@@ -239,7 +240,6 @@ ASSOCIATE(RLMIN=>YDECLDP%RLMIN, &
 ZAW    = 1.0_JPRB
 ZBW    = 1.0_JPRB
 
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JL=KIDIA,KFDIA
   PWUBASE(JL)=0.0_JPRB
@@ -248,14 +248,12 @@ DO JL=KIDIA,KFDIA
   KDPL(JL)=KLEV
 ENDDO
 
-!$ACDC }
 
 JKT1=KINDEX
 JKT2=NJKT2
 ZRG=1.0_JPRB/RG
 ZRCPD=1.0_JPRB/RCPD
 
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JK=1,KLEV
   DO JL=KIDIA,KFDIA
@@ -304,9 +302,6 @@ DO JK=1,KLEV
   ENDDO
 ENDDO
 
-!$ACDC }
-
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
 DO JKK=KLEV,JKT1,-1 ! Big external loop for level testing:
                     ! find first departure level that produces deepest cloud top
@@ -733,9 +728,6 @@ DO JKK=KLEV,JKT1,-1 ! Big external loop for level testing:
 
 ENDDO ! end of big loop for search of departure level     
 
-!$ACDC }
-
-!$ACDC PARALLEL,TARGET=OpenMP/OpenACCSingleColumn {
 
       ! chose maximum CAPE value
 PCAPE(KIDIA:KFDIA) = ZCAPE(KIDIA:KFDIA,1)
@@ -745,7 +737,6 @@ DO JK=2,KLEV
   ENDDO
 ENDDO
 
-!$ACDC }
 
 END ASSOCIATE
 IF (LHOOK) CALL DR_HOOK('CUBASEN',1,ZHOOK_HANDLE)

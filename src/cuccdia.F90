@@ -4,7 +4,8 @@ SUBROUTINE CUCCDIA &
  & LDCUM,    PQU,      PLU,      PMFU,     PRAIN,&
  & PARPRC,   KTOPC,    KBASEC                   )  
 
-!$ACDC singlecolumn --array-slice-to-address
+!$ACDC singlecolumn 
+!$ACDC manyblocks --max-statements-per-parallel=20
 
 !**** *CUCCDIA*- UPDATES PRECIPITAION, CLOUD BASE AND CLOUD TOP
 !                FOR DIAGNOSTIC SCHEME FOR CONVECTIVE CLOUDS

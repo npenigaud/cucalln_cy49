@@ -9,7 +9,8 @@ SUBROUTINE CUDTDQN &
  & PMFUL,    PDMFUP,   PDPMEL,   PMFLXR,   PMFLXS,&
  & PTENT,    PTENQ,    PENTH )
 
-!$ACDC singlecolumn --array-slice-to-address
+!$ACDC singlecolumn 
+!$ACDC manyblocks --max-statemets-per-parallel=20
 
 !**** *CUDTDQ* - UPDATES T AND Q TENDENCIES, PRECIPITATION RATES
 !                DOES GLOBAL DIAGNOSTICS

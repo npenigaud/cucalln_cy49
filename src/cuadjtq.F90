@@ -11,7 +11,7 @@ SUBROUTINE CUADJTQ &
  & (YDTHF, YDCST, YDEPHLI,KIDIA,    KFDIA,    KLON,    KLEV,     KK,&
  &  PSP,      PT,       PQ,      LDFLAG,   KCALL,   LDOFLAG)  
 
-!$ACDC singlecolumn --array-slice-to-address
+!$ACDC singlecolumn 
 
 !          PURPOSE.
 !          --------

@@ -7,7 +7,8 @@ SUBROUTINE CUCTRACER &
  & PDMFUP,   PDMFDP,&
  & PCEN,     PTENC,    PSCAV  )  
 
-!$ACDC singlecolumn --array-slice-to-address
+!$ACDC singlecolumn 
+!$ACDC manyblocks --max-statements-per-parallel=20
 
 !**** *CUCTRACER* - COMPUTE CONVECTIVE TRANSPORT OF CHEM. TRACERS
 !                   IMPORTANT: ROUTINE IS FOR POSITIVE DEFINIT QUANTITIES
